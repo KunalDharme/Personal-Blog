@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload Photos</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #eee;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #1e1e1e;
+      border-radius: 10px;
+    }
+    input[type="file"], button {
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1rem;
+    }
+    .photo-card {
+      position: relative;
+      display: inline-block;
+      margin: 10px;
+    }
+    .photo-card img {
+      width: 200px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 255, 153, 0.5);
+    }
+    .photo-card form {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+    }
+    .photo-card button {
+      background-color: #ff4444;
+      border: none;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 5px rgba(255, 0, 0, 0.4);
+      transition: background-color 0.3s;
+    }
+    .photo-card button:hover {
+      background-color: #cc0000;
+    }
+    .back-button {
+  position: absolute;
+  top: 60px;
+  left: 80px;  /* or right: 20px; if you prefer */
+  color: #00ff99;
+  background-color: transparent;
+  border: 0.5px solid #00ff99;
+  padding: 8px 15px;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s ease;
+  box-shadow: 0 0 4px #00ff99;
+}
+
+.back-button:hover {
+  background-color: #00ff99;
+  color: #121212;
+  text-shadow: none;
+}
+  </style>
+</head>
+<body>
+  <a href="{{ url_for('admin.dashboard') }}" class="back-button"> ㄑ Go Back</a>
+
+  <div class="container">
+    <h1>Upload Photos</h1>
+    <form method="POST" enctype="multipart/form-data">
+      <input type="file" name="photo" accept="image/*" required />
+      <button type="submit">Upload</button>
+    </form>
+
+    <div class="gallery">
+      {% for photo in photos %}
+        <div class="photo-card">
+          <img src="{{ url_for('static', filename='uploads/' ~ photo.filename) }}" alt="Photo">
+          <form method="POST" action="{{ url_for('admin.delete_photo', photo_id=photo.id) }}" onsubmit="return confirm('Are you sure you want to delete this photo?');">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+      {% else %}
+        <p>No photos uploaded yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>

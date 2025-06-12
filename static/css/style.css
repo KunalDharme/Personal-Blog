@@ -1,0 +1,360 @@
+/* ===== General Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji';
+}
+
+/* ===== Body and Typography ===== */
+body {
+  font-family: Georgia, serif;
+  background: linear-gradient(to left, #ffffff, #d6d4ff);
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ===== Header ===== */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #000000, #04004f);
+  padding: 10px 60px;
+  color: white;
+  position: relative;
+  border-bottom: 5px solid #000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Logo inside header */
+.logo-container img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid white;
+  background-color: white;
+}
+
+/* ===== Navigation ===== */
+.main-nav {
+  background-color: #fbf1f1;
+  text-align: center;
+  padding: 8px 0;
+  border-bottom: 3px solid #dccbcb;
+  box-shadow: 0 2px 8px rgba(220, 203, 203, 0.4);
+  user-select: none;
+}
+
+.main-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  gap: 25px;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: #000844;
+  font-weight: 1150;
+  font-size: 1.18em;
+  padding: 10px 12px;
+  border-radius: 20px;
+  position: relative;
+  transition: color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.main-nav a:hover {
+  color: #fff;
+  background-color: rgba(192, 53, 53, 0.8);
+  transform: scale(0.8);
+}
+
+.main-nav a.active {
+  color: #fff;
+  background-color: #b00043;
+  box-shadow: 0 0 12px #b00043;
+  pointer-events: none; /* disable clicks on active */
+  transform: scale(1.05);
+}
+
+/* Optional underline effect on hover */
+.main-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 15%;
+  width: 70%;
+  height: 3px;
+  background-color: transparent;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+
+.main-nav a:hover::after {
+  background-color: #fff;
+}
+
+/* ===== Layout Containers ===== */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 20px;
+  margin-top: 16px;
+}
+
+/* Sidebar styling */
+.sidebar {
+  width: 25%;
+  background: #fff;
+  padding: 20px;
+  border-right: 1px solid #ccc;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+}
+
+.sidebar .profile-img {
+  width: 95%;
+  border-radius: 5x;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-top: 9.2px;
+}
+
+.sidebar h2 {
+  margin: 10px 0 5px;
+  font-size: 1.4em;
+  color: #222;
+}
+
+/* Blog posts section */
+.blog-posts {
+  width: 70%;
+  padding: 10px;
+}
+
+.blog-posts article {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-left: 5px solid #333;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.blog-posts h2 {
+  margin-bottom: 5px;
+}
+
+.blog-posts a {
+  text-decoration: none;
+  color: #222;
+  transition: 0.2s;
+}
+
+.blog-posts a:hover {
+  color: #0077aa;
+  text-decoration: underline;
+}
+
+/* Date styling */
+.date {
+  font-size: 0.9em;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 15px;
+  background: #222;
+  color: white;
+  font-size: 0.9em;
+  margin-top: 30px;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+}
+
+/* ===== Comments Section ===== */
+.comments {
+  margin-top: 30px;
+  background-color: #fff;
+  padding: 20px;
+  border-top: 2px solid #333;
+}
+
+.comments h3 {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+.comment {
+  border-left: 4px solid #ccc;
+  padding-left: 15px;
+  margin-bottom: 15px;
+}
+
+.comment p {
+  margin-bottom: 5px;
+}
+
+.comment-date {
+  font-size: 0.85em;
+  color: #777;
+}
+
+/* ===== Contact Form ===== */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #fff;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.contact-form label {
+  font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.contact-form button {
+  width: fit-content;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background-color: #555;
+}
+
+/* ===== Help Popup ===== */
+#help-link-wrapper {
+  position: relative;
+}
+
+#help-hover-modal {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: -100px;
+  width: 650px;
+  background: rgba(247, 249, 252, 0.95);
+  color: #000000;
+  padding: 25px;
+  border-radius: 10px;
+  z-index: 999;
+  text-align: left;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease-in-out;
+}
+
+#help-hover-modal h3 {
+  margin-top: 0;
+  color: #000000;
+  font-size: 18px;
+}
+
+#help-link-wrapper:hover #help-hover-modal {
+  display: block;
+}
+
+/* ===== Comment Section Styling ===== */
+.comments-section {
+  background-color: #fffafa;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  color: #000000;
+  box-shadow: 0 0 8px rgba(35, 35, 35, 0.3);
+}
+
+.comments-section h4 {
+  margin-bottom: 10px;
+  color: #ff4da6;
+  font-family: 'Georgia', serif;
+}
+
+/* Individual comment styling */
+.comments-section p {
+  margin-bottom: 8px;
+  padding-left: 10px;
+  border-left: 3px solid #ff4da6;
+  font-size: 15px;
+}
+
+/* ===== Toggle Button for Comments ===== */
+.toggle-comment-btn {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background-color: #080047;
+  color: #ff4da6;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.toggle-comment-btn:hover {
+  background-color: #ff4da6;
+  border: 1px solid #ff4da6;
+  color: #080047;
+}
+
+/* ===== Comment Form Styling ===== */
+.comment-form {
+  background-color: #ffffff;
+  border: 1px solid #444;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  color: #000;
+}
+
+.comment-form input[type="text"],
+.comment-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  border: 1px solid #666;
+  background-color: #ffffff;
+  color: #000000;
+  font-family: monospace;
+}
+
+.comment-form button {
+  padding: 6px 12px;
+  background-color: #ff4da6;
+  border: none;
+  border-radius: 5px;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.comment-form button:hover {
+  background-color: #ff99cc;
+}
+
+/* ===== Font for Comments & Comment Form ===== */
+.comments-section, 
+.comment-form {
+  font-family: 'Ubuntu Mono', monospace;
+}

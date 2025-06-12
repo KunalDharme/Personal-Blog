@@ -1,0 +1,114 @@
+<!-- Footer -->
+<footer style="background: linear-gradient(90deg, #04004f, #000000); color: #fff; padding: 30px 20px; font-family: 'Georgia', serif;">
+  <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; flex-wrap: wrap; gap: 20px;">
+
+    <!-- Left: Text & Social Icons -->
+    <div style="flex: 1; min-width: 200px; padding-right: 200px;">
+      <p style="font-size: 1.2rem; margin-bottom: 10px;">
+        &copy; <span id="year"></span> Mr. Kunal V. Dharme.  All rights reserved.
+      </p>
+      <p style="font-style: italic; color: #b0b0ff; margin-bottom: 20px;">
+        “The Science of Digital Deduction”
+      </p>
+
+      <!-- Social Icons -->
+      <div style="display: flex; justify-content: center; gap: 25px; font-size: 1.5rem;">
+        <a href="https://github.com/KunalDharme" target="_blank" rel="noopener" aria-label="GitHub" style="color: #fff; transition: color 0.3s ease;">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.388-1.333-1.758-1.333-1.758-1.087-.744.083-.729.083-.729 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.809 1.304 3.495.997.107-.776.42-1.305.763-1.605-2.665-.3-5.467-1.333-5.467-5.93 0-1.31.47-2.381 1.236-3.221-.123-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.301 1.23a11.5 11.5 0 013.003-.404 11.49 11.49 0 013.003.404c2.292-1.552 3.298-1.23 3.298-1.23.655 1.653.242 2.873.12 3.176.77.84 1.235 1.911 1.235 3.221 0 4.61-2.807 5.628-5.48 5.922.43.372.823 1.102.823 2.222v3.293c0 .32.218.694.824.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        </a>
+        <a href="https://twitter.com/yourhandle" target="_blank" rel="noopener" aria-label="Twitter" style="color: #1DA1F2; transition: color 0.3s ease;">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M23.954 4.569c-.885.389-1.83.654-2.825.775a4.936 4.936 0 002.163-2.724 9.885 9.885 0 01-3.127 1.196 4.92 4.92 0 00-8.384 4.482A13.978 13.978 0 011.671 3.15a4.902 4.902 0 001.523 6.573 4.922 4.922 0 01-2.228-.616v.061a4.926 4.926 0 003.946 4.827 4.996 4.996 0 01-2.224.084 4.93 4.93 0 004.6 3.417 9.867 9.867 0 01-6.102 2.104c-.398 0-.79-.023-1.175-.068a13.95 13.95 0 007.557 2.209c9.054 0 14.001-7.496 14.001-13.985 0-.21-.004-.42-.014-.63a9.936 9.936 0 002.459-2.548l-.047-.02z"/></svg>
+        </a>
+        <a href="kunaldharme13@gmail.com" aria-label="Email" style="color: #ff4da6; transition: color 0.3s ease;">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.104 0-2 .896-2 2v12c0 1.104.896 2 2 2h16c1.105 0 2-.896 2-2V6c0-1.104-.895-2-2-2zm0 2v.511l-8 5.489-8-5.489V6h16zm0 12H4v-9.255l8 5.491 8-5.491V18z"/></svg>
+        </a>
+      </div>
+
+      <p style="font-size: 0.9rem; color: #999;">
+        Built with <span style="color: #ff4da6;">&#10084;&#65039;</span> by Kunal V. Dharme
+      </p>
+    </div>
+
+    <!-- Right: Calendar -->
+    <div id="calendar-container" style="width: 280px; background: #111133; padding: 15px; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.7); font-size: 0.85rem; color: #ccc;">
+      <div id="calendar-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <button id="prev-month" style="background: transparent; border: none; color: #88f; cursor: pointer; font-size: 1.3rem;">&#8249;</button>
+        <div id="month-year" style="font-weight: bold; font-size: 1.1rem;"></div>
+        <button id="next-month" style="background: transparent; border: none; color: #88f; cursor: pointer; font-size: 1.3rem;">&#8250;</button>
+      </div>
+      <div id="calendar-weekdays" style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+        <div style="width: 28px; text-align: center; color: #777;">Sun</div>
+        <div style="width: 28px; text-align: center; color: #777;">Mon</div>
+        <div style="width: 28px; text-align: center; color: #777;">Tue</div>
+        <div style="width: 28px; text-align: center; color: #777;">Wed</div>
+        <div style="width: 28px; text-align: center; color: #777;">Thu</div>
+        <div style="width: 28px; text-align: center; color: #777;">Fri</div>
+        <div style="width: 28px; text-align: center; color: #777;">Sat</div>
+      </div>
+      <div id="calendar-days" style="display: flex; flex-wrap: wrap; justify-content: flex-start;"></div>
+    </div>
+
+  </div>
+
+  <!-- JS: Year and Calendar -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const calendarDays = document.getElementById('calendar-days');
+    const monthYear = document.getElementById('month-year');
+    const prevBtn = document.getElementById('prev-month');
+    const nextBtn = document.getElementById('next-month');
+    let currentDate = new Date();
+
+    function renderCalendar(date) {
+      calendarDays.innerHTML = '';
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const monthNames = ["January", "February", "March", "April", "May", "June", 
+                          "July", "August", "September", "October", "November", "December"];
+      monthYear.textContent = `${monthNames[month]} ${year}`;
+      const firstDayOfMonth = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      for (let i = 0; i < firstDayOfMonth; i++) {
+        const emptyDiv = document.createElement('div');
+        emptyDiv.style.width = '28px';
+        emptyDiv.style.height = '28px';
+        calendarDays.appendChild(emptyDiv);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayDiv = document.createElement('div');
+        dayDiv.style.width = '28px';
+        dayDiv.style.height = '28px';
+        dayDiv.style.lineHeight = '28px';
+        dayDiv.style.textAlign = 'center';
+        dayDiv.style.marginBottom = '5px';
+        dayDiv.style.borderRadius = '4px';
+        dayDiv.style.position = 'relative';
+        dayDiv.style.cursor = 'default';
+        dayDiv.style.userSelect = 'none';
+        dayDiv.textContent = day;
+
+        const today = new Date();
+        if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+          dayDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+          dayDiv.style.fontWeight = 'bold';
+        }
+
+        calendarDays.appendChild(dayDiv);
+      }
+    }
+
+    prevBtn.onclick = () => {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      renderCalendar(currentDate);
+    };
+    nextBtn.onclick = () => {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      renderCalendar(currentDate);
+    };
+
+    renderCalendar(currentDate);
+  </script>
+</footer>

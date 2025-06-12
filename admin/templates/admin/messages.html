@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>📋︎ Contact Messages</title>
+  <style>
+    body {
+      background-color: #121212;
+      font-family: Arial, sans-serif;
+      color: #eee;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00ff99;
+    }
+    h1 {
+      text-align: center;
+      color: #00ff99;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #00ff99;
+    }
+    tr:hover {
+      background-color: #292929;
+    }
+    a {
+      color: #00ff99;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #00cc77;
+    }
+    .read {
+      color: #aaa;
+    }
+    .back-button {
+  position: absolute;
+  top: 60px;
+  left: 80px;  /* or right: 20px; if you prefer */
+  color: #00ff99;
+  background-color: transparent;
+  border: 0.5px solid #00ff99;
+  padding: 8px 15px;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s ease;
+  box-shadow: 0 0 4px #00ff99;
+}
+
+.back-button:hover {
+  background-color: #00ff99;
+  color: #121212;
+  text-shadow: none;
+}
+  </style>
+</head>
+<body>
+  <a href="{{ url_for('admin.dashboard') }}" class="back-button"> ㄑ Go Back</a>
+
+  <div class="container">
+    <h1>✉ Contact Messages</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Message</th>
+          <th>Received At</th>
+          <th>Status</th>
+          <th>Mark as Read/Unread</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for msg in messages %}
+          <tr class="{{ 'read' if msg.read else '' }}">
+            <td>{{ msg.name }}</td>
+            <td><a href="mailto:{{ msg.email }}">{{ msg.email }}</a></td>
+            <td>{{ msg.message }}</td>
+            <td>{{ msg.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ 'Read' if msg.read else 'Unread' }}</td>
+            <td><a href="{{ url_for('admin.mark_as_read', message_id=msg.id) }}">Change Status</a></td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="6">No messages yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div style="text-align:center; margin-top:20px;">
+      <a href="{{ url_for('admin.dashboard') }}">← Back to Dashboard</a>
+    </div>
+  </div>
+</body>
+</html>

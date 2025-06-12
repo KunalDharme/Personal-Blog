@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manage Blog Posts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #eee;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    }
+
+    h2 {
+      color: #00ff99;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ff99;
+    }
+
+    a {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #00ff99;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    a:hover {
+      color: #00cc77;
+      text-shadow: 0 0 5px #00cc77;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    ul li {
+      background-color: #292929;
+      margin-bottom: 10px;
+      padding: 12px 15px;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      color: #eee;
+      box-shadow: 0 0 5px rgba(0, 255, 153, 0.4);
+    }
+
+    ul li .post-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    ul li strong {
+      color: #00ff99;
+    }
+
+    form button {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      margin-left: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    form button:hover {
+      background-color: #cc0000;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .post-actions form {
+      margin: 0;
+    }
+
+    .post-actions button {
+      background: none;
+      border: none;
+      color: #ff4d4d;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .post-actions button:hover {
+      color: #000000;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 60px;
+      left: 80px;
+      color: #00ff99;
+      background-color: transparent;
+      border: 0.5px solid #00ff99;
+      padding: 8px 15px;
+      border-radius: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s ease;
+      box-shadow: 0 0 4px #00ff99;
+    }
+
+    .back-button:hover {
+      background-color: #00ff99;
+      color: #121212;
+      text-shadow: none;
+    }
+
+    .post-meta {
+      font-size: 0.9rem;
+      color: #00ff99;
+      margin-top: 4px;
+    }
+
+    /* Comments container */
+    .comments-container {
+      margin-top: 10px;
+      padding: 12px;
+      background-color: #222;
+      border-radius: 6px;
+      display: none;
+      box-shadow: 0 0 8px #00ff99;
+
+      /* ✅ Scroll behavior */
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+
+    .comment {
+      border-bottom: 1px solid #00ff99;
+      padding: 8px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .comment:last-child {
+      border-bottom: none;
+    }
+
+    .comment-info {
+      color: #ccc;
+      font-size: 0.85rem;
+    }
+
+    .comment-text {
+      margin-top: 4px;
+      font-size: 1rem;
+      color: #eee;
+    }
+
+    .comment-right {
+      text-align: right;
+    }
+
+    .comment-actions form {
+      margin: 0;
+    }
+
+    .comment-actions button {
+      background: none;
+      border: none;
+      color: #ff4d4d;
+      cursor: pointer;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .comment-actions button:hover {
+      color: #000000;
+    }
+
+    .approval-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .approve-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .approve-btn:hover {
+      background-color: #218838;
+    }
+
+    .unapproved-comment {
+      background-color: #333;
+      border-left: 4px solid #ffc107;
+      padding-left: 12px;
+    }
+
+    .like-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      margin-right: 10px;
+    }
+
+  </style>
+</head>
+<body>
+  <a href="{{ url_for('admin.dashboard') }}" class="back-button"> ← Go Back</a>
+
+  <div class="container">
+    <h2>All Blog Posts</h2>
+    <a href="{{ url_for('admin.new_post') }}">+ New Post</a>
+    <ul>
+      {% for post in posts %}
+        <li>
+          <div class="post-header">
+            <div>
+              <strong>{{ post.title }}</strong> — {{ post.created_at.strftime('%Y-%m-%d') }}
+              <div class="post-meta">
+                Likes: {{ post.likes or 0 }} | 
+                Total Comments: {{ post.comments | length }} | 
+                Approved: {{ post.comments | selectattr('approved', 'equalto', True) | list | length }}
+              </div>
+            </div>
+            <div class="post-actions">
+              <form action="{{ url_for('admin.like_post', blog_id=post.id) }}" method="POST" style="display:inline;">
+                <button type="submit" class="like-btn">&#9829; Like</button>
+              </form>
+              <a href="{{ url_for('admin.edit_post', blog_id=post.id) }}">View/Edit</a>
+              <a href="javascript:void(0);" class="toggle-comments" data-post-id="{{ post.id }}">Comments</a>
+              <form action="{{ url_for('admin.delete_post', blog_id=post.id) }}" method="POST" style="display:inline;">
+                <button type="submit" onclick="return confirm('Are you sure you want to delete this post?');">Delete</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Comments Section -->
+          <div id="comments-{{ post.id }}" class="comments-container">
+            {% for comment in post.comments %}
+              <div class="comment {% if not comment.approved %}unapproved-comment{% endif %}">
+                <div>
+                  <div class="comment-info">
+                    <strong>{{ comment.name }}</strong> &bull; {{ comment.created_at.strftime('%Y-%m-%d %H:%M') }}
+                    {% if not comment.approved %}
+                      <span style="color: #ffc107; font-weight: bold;">[PENDING APPROVAL]</span>
+                    {% endif %}
+                  </div>
+                  <div class="comment-text">{{ comment.text }}</div>
+                  
+                  {% if not comment.approved %}
+                    <div class="approval-actions">
+                      <form action="{{ url_for('admin.approve_comment', comment_id=comment.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="approve-btn">Approve</button>
+                      </form>
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="comment-actions">
+                  <form action="{{ url_for('admin.delete_comment', comment_id=comment.id) }}" method="POST" onsubmit="return confirm('Delete this comment?');">
+                    <button type="submit">Delete</button>
+                  </form>
+                </div>
+              </div>
+            {% else %}
+              <p style="color:#888; padding:8px 0;">No comments yet.</p>
+            {% endfor %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggles = document.querySelectorAll('.toggle-comments');
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const postId = toggle.getAttribute('data-post-id');
+        const commentsDiv = document.getElementById('comments-' + postId);
+        if (!commentsDiv) return;
+
+        if (commentsDiv.style.display === 'block') {
+          commentsDiv.style.display = 'none';
+          toggle.textContent = 'Comments';
+        } else {
+          commentsDiv.style.display = 'block';
+          toggle.textContent = 'Comments';
+        }
+      });
+    });
+
+    // ✅ Auto-open comment section using URL param ?open_post=<id>
+    const params = new URLSearchParams(window.location.search);
+    const openPostId = params.get('open_post');
+    if (openPostId) {
+      const commentsDiv = document.getElementById('comments-' + openPostId);
+      const toggleBtn = document.querySelector(`.toggle-comments[data-post-id="${openPostId}"]`);
+      if (commentsDiv && toggleBtn) {
+        commentsDiv.style.display = 'block';
+        toggleBtn.textContent = 'Comments';
+      }
+    }
+  });
+</script>
+
+
+</body>
+</html>

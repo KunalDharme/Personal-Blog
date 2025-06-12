@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kunal's Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Header Section -->
+<header class="site-header">
+  <div class="header-text">
+    <h1>
+      <span style="font-size: 30px; font-weight: normal; position: relative; top: -20px;">The Blog of</span>
+      <span style="margin-left: 20px; font-size: 48px; font-weight: bold; font-family: Impact, cursive; color: #e6005c; text-shadow: 2px 2px 5px black;">
+        Mr. Kunal V. Dharme
+      </span>
+    </h1>
+    <p style="margin-top: 13px; font-family: 'Brush Script MT', cursive; font-size: 22px; color: #ffffff;">
+      From the Science of Digital Deduction
+    </p>
+  </div>
+  <div class="logo-container">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+  </div>
+</header>
+
+<!-- Navigation Menu -->
+<nav class="main-nav">
+  <ul>
+    <li><a href="{{ url_for('home') }}">Home</a></li>
+    <li><a href="{{ url_for('all_blogs') }}">Blogs</a></li>
+    <li><a href="{{ url_for('photos') }}">Photos</a></li>
+    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+    <li><a href="{{ url_for('help') }}">Help?</a></li>
+  </ul>
+</nav>
+
+<!-- Main Content Area -->
+<div class="container">
+  
+  <!-- Sidebar Section -->
+
+  <aside class="sidebar">
+    <div>
+      <img src="{{ url_for('static', filename='images/' + (profile_image or 'kunal.jpg')) }}" class="profile-img" alt="Kunal V. Dharme">
+      <h2>I'm Kunal V. Dharme,</h2>
+      <p>The world's only consulting investigator.<br>
+        Contact me at: <strong>kunaldharme13@gmail.com</strong>
+      </p>
+
+      <h3 style="margin-top: 50px; margin-bottom: 10px; text-align: center; color: #0037ff;">━━━ My Photos ━━━</h3>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;">
+        {% for photo in photo_list[:4] %}
+          <img src="{{ url_for('static', filename='uploads/' ~ photo) }}" alt="Photo" style="width: 100%; height: 80px; object-fit: cover; border-radius: 6px;">
+        {% endfor %}
+      </div>
+      <div style="text-align: center; margin-top: 8px;">
+        <a href="{{ url_for('photos') }}" style="font-size: 0.9rem; color: #5d3100; text-decoration: none; font-weight: bold;">
+          View More →
+        </a>
+      </div>
+
+      <h3 style="margin-top: 60px; margin-bottom: 10px; text-align: center; color: #ff6f00;">━━━ Famous Blogs ━━━</h3>
+      <ul style="list-style-type: none; padding-left: 0;">
+        {% for blog in famous_blogs %}
+          <li style="margin-bottom: 8px;">
+            <span style="color: #003b99; font-weight: bold;margin-left: 8px;">&#9733; {{ blog.title }}</span>
+          </li>
+        {% else %}
+          <li style="text-align: center; color: #888;">No famous blogs yet.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Blog Post Section -->
+  <main class="blog-posts">
+    {% for blog in blogs %}
+    <article>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>{{ blog.title }}</h2>
+        <div>
+          <button class="like-btn" onclick="toggleLike(this)" data-slug="{{ blog.slug }}">
+            <span class="heart">&#9825;</span>
+          </button>
+          <span class="like-count" id="like-count-{{ blog.slug }}">{{ blog.likes or 0 }}</span>
+        </div>
+      </div>
+
+      <p class="date">{{ blog.created_at.strftime('%B %d, %Y') }}</p>
+      <!-- For the preview section -->
+      <p class="blog-preview" id="preview-{{ blog.id }}">
+        {{ (blog.content[:150] | replace('\n', '<br>') | safe) }}{% if blog.content|length > 150 %}...{% endif %}
+      </p>
+
+      <!-- For the full content section -->
+      {% if blog.content|length > 150 %}
+        <p class="blog-full-content" id="full-{{ blog.id }}" style="display:none;">
+          {{ blog.content | replace('\n', '<br>') | safe }}
+        </p>
+        <button onclick="toggleFullContent('{{ blog.id }}')" id="btn-{{ blog.id }}" style="border: none; color: rgb(30, 0, 79); margin-top: 18px;">
+          📖 Show More
+        </button>
+      {% endif %}
+
+      <!-- Comments Section with Scroll & View All -->
+      <div class="comments-section" id="comments-{{ blog.slug }}">
+        <h4>Comments:</h4>
+        <div class="comments-list" id="comments-list-{{ blog.slug }}" style="max-height: 90px; overflow: hidden;">
+          {% set approved_comments = blog.comments | selectattr("approved") | list %}
+          {% if approved_comments %}
+            <div class="comment">
+              <strong>{{ approved_comments[0].name }}</strong>: {{ approved_comments[0].text }}
+              <small class="comment-date">{{ approved_comments[0].created_at.strftime('%B %d, %Y') }}</small>
+            </div>
+            {% if approved_comments|length > 1 %}
+              <div class="extra-comments" style="display: none;">
+                {% for comment in approved_comments[1:] %}
+                <div class="comment">
+                  <strong>{{ comment.name }}</strong>: {{ comment.text }}
+                  <small class="comment-date">{{ comment.created_at.strftime('%B %d, %Y') }}</small>
+                </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% else %}
+            <p class="no-comments">No comments yet.</p>
+          {% endif %}
+        </div>
+        {% if approved_comments|length > 1 %}
+          <button style="background-color: #ffdddd; color: #0037ff;border: none;" onclick="toggleComments('{{ blog.slug }}')">🧾 View All Comments</button>
+        {% endif %}
+      </div>
+
+
+      <!-- Add Comment Button -->
+      <button onclick="toggleCommentForm('{{ blog.slug }}')" class="toggle-comment-btn">💬 Add Comment</button>
+
+      <!-- Comment Form -->
+      <form id="comment-form-{{ blog.slug }}" onsubmit="event.preventDefault(); addComment('{{ blog.slug }}');" class="comment-form" style="display: none;">
+        <input type="text" name="name" placeholder="Your name" required>
+        <textarea name="text" placeholder="Write your comment..." required></textarea>
+        <button type="submit">Post Comment</button>
+        <div class="form-message" id="message-{{ blog.slug }}"></div>
+      </form>
+    </article>
+    {% else %}
+    <p>No blog posts yet.</p>
+    {% endfor %}
+
+    <div style="text-align: center; margin-top: 8px;">
+      <a href="{{ url_for('all_blogs') }}" style="font-size: 1rem; color: #00550d; text-decoration: none; font-weight: bold;">
+        Click Here To Read More →
+      </a>
+    </div>
+  </main>
+
+</div>
+
+<!-- Footer -->
+{% include 'footer.html' %}
+
+<!-- Scripts -->
+<script>
+  // Track liked posts to prevent multiple likes
+  let likedPosts = new Set();
+
+  function toggleCommentForm(slug) {
+    const form = document.getElementById('comment-form-' + slug);
+    form.style.display = form.style.display === "none" ? "block" : "none";
+  }
+
+  async function addComment(slug) {
+    const form = document.getElementById('comment-form-' + slug);
+    const name = form.querySelector('input[name="name"]').value.trim();
+    const text = form.querySelector('textarea[name="text"]').value.trim();
+    const messageDiv = document.getElementById('message-' + slug);
+
+    if (!name || !text) {
+      showMessage(messageDiv, 'Please fill in both name and comment.', 'error');
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("text", text);
+
+      const response = await fetch(`/add_comment/${slug}`, {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        showMessage(messageDiv, 'Comment submitted for approval!', 'success');
+        form.reset();
+        setTimeout(() => {
+          form.style.display = "none";
+          messageDiv.innerHTML = '';
+        }, 3000);
+      } else {
+        showMessage(messageDiv, data.error || 'Failed to post comment.', 'error');
+      }
+    } catch (error) {
+      showMessage(messageDiv, 'Network error. Please try again.', 'error');
+    }
+  }
+
+  async function toggleLike(button) {
+    const slug = button.getAttribute('data-slug');
+    const heartSpan = button.querySelector('.heart');
+    const countSpan = document.getElementById('like-count-' + slug);
+    
+    // Prevent multiple likes from same user
+    if (likedPosts.has(slug)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/like_post/${slug}`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ action: 'like' })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        countSpan.textContent = data.likes;
+        heartSpan.textContent = '❤️';
+        button.classList.add('liked');
+        likedPosts.add(slug);
+        button.disabled = true;
+        button.style.opacity = '1';
+        button.style.size = '1px';
+      }
+    } catch (error) {
+      console.error('Error liking post:', error);
+    }
+  }
+
+  function showMessage(element, message, type) {
+    element.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+    element.style.color = type === 'error' ? '#ff4444' : '#00aa00';
+    element.style.padding = '10px';
+    element.style.marginTop = '10px';
+  }
+
+  function toggleFullContent(id) {
+    const preview = document.getElementById('preview-' + id);
+    const fullContent = document.getElementById('full-' + id);
+    const btn = document.getElementById('btn-' + id);
+
+    if (fullContent.style.display === "none") {
+      fullContent.style.display = "block";
+      preview.style.display = "none";
+      btn.textContent = "⬅️ Show Less";
+    } else {
+      fullContent.style.display = "none";
+      preview.style.display = "block";
+      btn.textContent = "📖 Show More";
+    }
+  }
+
+  // Load initial data on page load
+  document.addEventListener('DOMContentLoaded', async () => {
+    const likeButtons = document.querySelectorAll('.like-btn');
+    
+    for (const button of likeButtons) {
+      const slug = button.getAttribute('data-slug');
+      
+      try {
+        const response = await fetch(`/get_post_data/${slug}`);
+        const data = await response.json();
+        
+        if (data.success) {
+          document.getElementById('like-count-' + slug).textContent = data.likes;
+          
+          // Update comments if any
+          if (data.comments.length > 0) {
+            const commentsList = document.getElementById('comments-list-' + slug);
+            const noCommentsMsg = commentsList.querySelector('.no-comments');
+            if (noCommentsMsg) {
+              noCommentsMsg.remove();
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error loading post data:', error);
+      }
+    }
+  });
+
+  function toggleComments(slug) {
+    const container = document.getElementById('comments-list-' + slug);
+    const extra = container.querySelector('.extra-comments');
+    const btn = container.nextElementSibling;
+
+    if (extra.style.display === "none") {
+      extra.style.display = "block";
+      container.style.maxHeight = "300px";
+      container.style.overflowY = "scroll";
+      btn.textContent = "⬅️ Hide Comments";
+    } else {
+      extra.style.display = "none";
+      container.style.maxHeight = "90px";
+      container.style.overflowY = "hidden";
+      btn.textContent = "🧾 View All Comments";
+    }
+  }
+
+</script>
+
+<style>
+  .like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+  }
+
+  .like-btn:hover {
+    transform: scale(1.1);
+  }
+
+  .like-btn.liked {
+    animation: pulse 0.3s ease-in-out;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  .like-count {
+    font-weight: bold;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .comment {
+    padding: 8px 8px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .comment:last-child {
+    border-bottom: none;
+  }
+
+  .comment-date {
+    color: #666;
+    font-size: 0.8rem;
+    display: block;
+    margin-top: 4px;
+  }
+
+  .comment-form {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+
+  .comment-form input,
+  .comment-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .comment-form textarea {
+    height: 80px;
+    resize: vertical;
+  }
+
+  .comment-form button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .comment-form button:hover {
+    background-color: #0056b3;
+  }
+
+  .toggle-comment-btn {
+    background-color: #db3b7b;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .toggle-comment-btn:hover {
+    background-color: #000246;
+    color: #ff599b;
+    border: none;
+  }
+
+  .no-comments {
+    color: #888;
+    font-style: italic;
+  }
+  .comments-list::-webkit-scrollbar {
+    width: 6px;
+  }
+  .comments-list::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 3px;
+  }
+
+</style>
+
+</body>
+</html>

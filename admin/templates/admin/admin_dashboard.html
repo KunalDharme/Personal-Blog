@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #eee;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+      position: relative;
+    }
+
+    h1 {
+      color: #00ff99;
+      text-align: center;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px #00ff99;
+    }
+
+    /* Profile thumbnail and dropdown */
+    .profile-section {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+      gap: 10px;
+    }
+
+    .menu-icon {
+      font-size: 24px;
+      color: #00ff99;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .menu-icon:hover {
+      background-color: #00ff9944;
+    }
+
+    /* Message icon */
+    .message-icon {
+      font-size: 22px;
+      color: #00ff99;
+      cursor: pointer;
+      position: relative;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+    }
+
+    .message-icon:hover {
+      background-color: #00ff9944;
+      color: #00cc77;
+    }
+
+    .red-dot {
+      position: absolute;
+      top: 5px;
+      right: 6px;
+      width: 9px;
+      height: 9px;
+      background-color: #ff3b3b;
+      border-radius: 50%;
+      box-shadow: 0 0 4px #ff3b3b;
+      display: none; /* Hidden by default, shown by JS */
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 60px;
+      background-color: #292929;
+      border: 1px solid #00ff99;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #00ff99;
+      z-index: 10;
+      min-width: 180px;
+    }
+
+    .dropdown a, .dropdown label {
+      display: block;
+      padding: 10px 20px;
+      color: #eee;
+      text-decoration: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .dropdown a:hover, .dropdown label:hover {
+      background-color: #00ff9966;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stat-box {
+      background-color: #292929;
+      padding: 20px;
+      border-radius: 10px;
+      width: 150px;
+      text-align: center;
+      box-shadow: 0 0 10px #00ff99;
+    }
+
+    .stat-box h2 {
+      font-size: 3rem;
+      margin: 0;
+      color: #00ff99;
+    }
+
+    .stat-box p {
+      margin: 5px 0 0 0;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .recent-posts {
+      background-color: #292929;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px #00ff99;
+    }
+
+    .recent-posts h3 {
+      margin-top: 0;
+      color: #00ff99;
+      text-shadow: 0 0 5px #00ff99;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      max-height: 300px;
+      overflow-y: auto;
+      margin: 0;
+    }
+
+    ul li {
+      padding: 10px 0;
+      border-bottom: 1px solid #00ff99;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #eee;
+      font-size: 1rem;
+    }
+
+    ul li:last-child {
+      border-bottom: none;
+    }
+
+    a {
+      color: #00ff99;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #00cc77;
+      text-shadow: 0 0 5px #00cc77;
+    }
+
+    .nav-links {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .nav-links a {
+      margin: 0 15px;
+      font-size: 1.1rem;
+      display: inline-block;
+      padding: 8px 15px;
+      border: 1px solid #00ff99;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background-color: #00ff99;
+      color: #121212;
+      text-shadow: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Profile and 3-dot menu -->
+    <div class="profile-section">
+      <span class="menu-icon" onclick="toggleDropdown()">&#x2630;</span>
+
+      <a href="{{ url_for('admin.view_messages') }}" class="message-icon" title="Messages" id="messageIcon">
+        &#9993;
+      </a>
+
+      <div class="dropdown" id="dropdownMenu">
+        <a href="{{ url_for('admin.profile_settings') }}">Profile Settings</a>
+        <a href="{{ url_for('admin.change_password') }}">Change Password</a>
+        <a href="{{ url_for('admin.logout') }}">Logout</a>
+      </div>
+    </div>
+
+    <h1>Admin Dashboard</h1>
+
+    <div class="stats">
+      <div class="stat-box">
+        <h2>{{ total_posts }}</h2>
+        <p>Total Posts</p>
+      </div>
+      <!-- Add more stat-box divs here if needed -->
+    </div>
+
+    <div class="recent-posts">
+      <h3>Recent Posts</h3>
+      <ul>
+        {% for post in recent_posts %}
+          <li>
+            <span>{{ post.title }}</span>
+            <a href="{{ url_for('admin.edit_post', blog_id=post.id) }}">✎ Edit</a>
+          </li>
+        {% else %}
+          <li>No posts yet.</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="nav-links">
+      <a href="{{ url_for('admin.posts') }}">Manage Posts</a>
+      <a href="{{ url_for('admin.new_post') }}">Add New Post</a>
+      <a href="{{ url_for('admin.upload_photos') }}">Photos</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      const menu = document.getElementById("dropdownMenu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    // Close dropdown if clicked outside
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById("dropdownMenu");
+      const icon = document.querySelector(".menu-icon");
+      if (!menu.contains(e.target) && !icon.contains(e.target)) {
+        menu.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>

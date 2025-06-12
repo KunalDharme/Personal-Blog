@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Help | Cyber Journal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: linear-gradient(to right, #ffffff, #e3e6ff);
+      color: #222;
+      line-height: 1.8;
+    }
+
+    .site-header {
+      background: linear-gradient(to right, #000000, #05005c);
+      color: white;
+      padding: 25px 15px;
+      border-bottom: 5px solid #000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .site-header h1 {
+      font-size: 2.2em;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    .help-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
+    }
+
+    .back-link {
+      margin-bottom: 20px;
+      display: inline-block;
+      background-color: #eee;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-weight: bold;
+      color: #4400a8;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .back-link:hover {
+      background-color: #ddd;
+    }
+
+    .help-intro {
+      margin-bottom: 25px;
+      font-size: 1.1em;
+    }
+
+    .help-section {
+      margin-bottom: 30px;
+    }
+
+    .help-section h2 {
+      color: #4400a8;
+      margin-bottom: 10px;
+      font-size: 1.5em;
+      border-left: 5px solid #4400a8;
+      padding-left: 10px;
+    }
+
+    .help-section p,
+    .help-section ul {
+      margin-left: 15px;
+    }
+
+    .help-section ul {
+      list-style-type: square;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding-left: 20px;
+    }
+
+    a {
+      color: #b00043;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Help & Support</h1>
+  </header>
+
+  <main class="help-container">
+    <!-- Back to Home -->
+    <a href="index.html" class="back-link">← Back to Home</a>
+
+    <section class="help-intro">
+      <p>
+        Welcome to <strong>My Personal Blog - The Science of Digital Deduction </strong> — a digital knowledge hub focused on 
+        <strong>cybersecurity</strong>, <strong>ethical hacking</strong>, and 
+        <strong>cyber forensic investigations</strong>. This platform is dedicated to 
+        providing in-depth articles, practical case studies, investigative techniques, and 
+        learning resources for individuals passionate about secure and ethical use of technology.
+      </p>
+    </section>
+
+    <section class="help-section">
+      <h2>📌 Mission</h2>
+      <p>
+        Promote awareness, education, and responsible behavior in the 
+        digital space. Whether you are a student, an IT professional, or a cybersecurity 
+        enthusiast, Cyber Journal equips you with accurate, actionable insights to navigate 
+        the cyber world confidently and ethically.
+      </p>
+    </section>
+
+    <section class="help-section">
+      <h2>🚨 Experiencing Suspicious Activity?</h2>
+      <p>
+        If you believe you have been targeted by cybercrime, online fraud, identity theft, 
+        or unauthorized access, we urge you to take immediate action. 
+        <a href="/contact">Reach out to us via the Contact page</a> for guidance and 
+        assistance. While we do not provide direct remediation services, we can help direct 
+        you toward the appropriate next steps.
+      </p>
+    </section>
+
+    <section class="help-section">
+      <h2>💡 When to Use This Page</h2>
+      <ul>
+        <li>To understand the purpose and values behind this platform.</li>
+        <li>If you're unsure how to respond to a cybersecurity concern.</li>
+        <li>To find resources or connect for inquiries or collaborations.</li>
+      </ul>
+    </section>
+
+    <section class="help-section">
+      <h2>📬 Getting in Touch</h2>
+      <p>
+        For any inquiries, feedback, or partnership opportunities, you may contact us through 
+        the <a href="/contact">Contact</a> page. We welcome:
+      </p>
+      <ul>
+        <li>Reports of suspicious online activity</li>
+        <li>Suggestions for improving the platform</li>
+        <li>Guest post submissions or research collaborations</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Footer -->
+<footer style="background: linear-gradient(90deg, #04004f, #000000); color: #fff; padding: 30px 20px; text-align: center; font-family: 'Georgia', serif;">
+  <div style="max-width: 900px; margin: auto;">
+    <p style="font-size: 1.2rem; margin-bottom: 10px;">
+      &copy; <span id="year"></span> Mr. Kunal V. Dharme.  All rights reserved.
+    </p>
+    <p style="font-style: italic; color: #b0b0ff; margin-bottom: 20px;">
+      “The Science of Digital Deduction”
+    </p>
+
+    <!-- Social Icons -->
+    <div style="display: flex; justify-content: center; gap: 25px; font-size: 1.5rem;">
+      <a href="https://github.com/KunalDharme" target="_blank" rel="noopener" aria-label="GitHub" style="color: #fff; transition: color 0.3s ease;">
+        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.388-1.333-1.758-1.333-1.758-1.087-.744.083-.729.083-.729 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.809 1.304 3.495.997.107-.776.42-1.305.763-1.605-2.665-.3-5.467-1.333-5.467-5.93 0-1.31.47-2.381 1.236-3.221-.123-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.301 1.23a11.5 11.5 0 013.003-.404 11.49 11.49 0 013.003.404c2.292-1.552 3.298-1.23 3.298-1.23.655 1.653.242 2.873.12 3.176.77.84 1.235 1.911 1.235 3.221 0 4.61-2.807 5.628-5.48 5.922.43.372.823 1.102.823 2.222v3.293c0 .32.218.694.824.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      </a>
+      <a href="https://twitter.com/yourhandle" target="_blank" rel="noopener" aria-label="Twitter" style="color: #1DA1F2; transition: color 0.3s ease;">
+        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M23.954 4.569c-.885.389-1.83.654-2.825.775a4.936 4.936 0 002.163-2.724 9.885 9.885 0 01-3.127 1.196 4.92 4.92 0 00-8.384 4.482A13.978 13.978 0 011.671 3.15a4.902 4.902 0 001.523 6.573 4.922 4.922 0 01-2.228-.616v.061a4.926 4.926 0 003.946 4.827 4.996 4.996 0 01-2.224.084 4.93 4.93 0 004.6 3.417 9.867 9.867 0 01-6.102 2.104c-.398 0-.79-.023-1.175-.068a13.95 13.95 0 007.557 2.209c9.054 0 14.001-7.496 14.001-13.985 0-.21-.004-.42-.014-.63a9.936 9.936 0 002.459-2.548l-.047-.02z"/></svg>
+      </a>
+      <a href="kunaldharme13@gmail.com" aria-label="Email" style="color: #ff4da6; transition: color 0.3s ease;">
+        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.104 0-2 .896-2 2v12c0 1.104.896 2 2 2h16c1.105 0 2-.896 2-2V6c0-1.104-.895-2-2-2zm0 2v.511l-8 5.489-8-5.489V6h16zm0 12H4v-9.255l8 5.491 8-5.491V18z"/></svg>
+      </a>
+    </div>
+
+    <p style="margin-top: 25px; font-size: 0.9rem; color: #999;">
+      Built with <span style="color: #ff4da6;">&#10084;&#65039;</span> by Kunal V. Dharme
+    </p>
+  </div>
+  
+
+  <script>
+    // Dynamically update year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</footer>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

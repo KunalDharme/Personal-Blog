@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #eee;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 350px;
+      padding: 30px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    }
+
+    h2 {
+      color: #00ff99;
+      text-align: center;
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px #00ff99;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #00ff99;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      background-color: #292929;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 15px;
+      color: #eee;
+      font-size: 1rem;
+      box-shadow: 0 0 5px rgba(0, 255, 153, 0.4);
+      transition: box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      box-shadow: 0 0 10px #00ff99;
+      background-color: #333333;
+    }
+
+    button {
+      background-color: #00ff99;
+      border: none;
+      border-radius: 6px;
+      padding: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #121212;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #00cc77;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Admin Login</h2>
+
+    <!-- Flash Message Section -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul style="list-style-type: none; padding: 0;">
+          {% for category, message in messages %}
+            <li style="background-color: #ff4444; color: white; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+              {{ message }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Login Form -->
+    <form method="POST">
+      <label>Username:</label>
+      <input type="text" name="username" required>
+      
+      <label>Password:</label>
+      <input type="password" name="password" required>
+      
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</body>
+</html>

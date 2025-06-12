@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Blog Post</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #eee;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    }
+
+    h2 {
+      color: #00ff99;
+      text-align: center;
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px #00ff99;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #00ff99;
+    }
+
+    input[type="text"],
+    textarea {
+      background-color: #292929;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 15px;
+      color: #eee;
+      font-size: 1rem;
+      resize: vertical;
+      box-shadow: 0 0 5px rgba(0, 255, 153, 0.4);
+      transition: box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      box-shadow: 0 0 10px #00ff99;
+      background-color: #333333;
+    }
+
+    button {
+      background-color: #00ff99;
+      border: none;
+      border-radius: 6px;
+      padding: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #121212;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #00cc77;
+      color: #fff;
+    }
+    .back-button {
+  position: absolute;
+  top: 60px;
+  left: 80px;  /* or right: 20px; if you prefer */
+  color: #00ff99;
+  background-color: transparent;
+  border: 0.5px solid #00ff99;
+  padding: 8px 15px;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s ease;
+  box-shadow: 0 0 4px #00ff99;
+}
+
+.back-button:hover {
+  background-color: #00ff99;
+  color: #121212;
+  text-shadow: none;
+}
+  </style>
+</head>
+<body>
+  <a href="{{ url_for('admin.dashboard') }}" class="back-button"> ㄑ Go Back</a>
+
+  <div class="container">
+    <h2>View/Edit Post</h2>
+    <form method="POST">
+      <label>Title:</label>
+      <input type="text" name="title" value="{{ post.title }}" required>
+
+      <label>Slug (URL):</label>
+      <input type="text" name="slug" value="{{ post.slug }}" required>
+
+      <label>Content:</label>
+      <textarea name="content" rows="10" required>{{ post.content }}</textarea>
+
+      <button type="submit">Update Post</button>
+    </form>
+  </div>
+</body>
+</html>
