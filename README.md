@@ -8,9 +8,7 @@ This project is more than a website. It's mu **digital deduction** that showcase
 
 ## 🌐 Live Site
 
-> [🔗 Visit my blog here](https://your-deployment-url.com)
-
-*(Replace the URL above once deployed)*
+> [🔗 Visit my blog here](https://personal-blog-vg0a.onrender.com/)
 
 ---
 
