@@ -53,3 +53,7 @@ pip install -r requirements.txt
 python create_db.py
 python setup_admin.py
 python app.py
+```
+
+## Author
+Kunal Dharme
